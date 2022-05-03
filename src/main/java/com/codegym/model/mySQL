@@ -1,0 +1,2 @@
+create database miniTest2;
+use miniTest2;
