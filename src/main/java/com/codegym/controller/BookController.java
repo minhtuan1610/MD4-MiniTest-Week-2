@@ -1,6 +1,7 @@
 package com.codegym.controller;
 
 import com.codegym.model.Book;
+import com.codegym.model.Category;
 import com.codegym.service.book.IBookService;
 import com.codegym.service.category.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class BookController {
     @Autowired
     private ICategoryService categoryService;
 
+    @ModelAttribute("categories")
+    public Iterable<Category> listAllCategory() {
+        return categoryService.findAll();
+    }
+
     @GetMapping("/list")
     public ModelAndView getAllBooks() {
         ModelAndView modelAndView = new ModelAndView("/book/list");
@@ -35,6 +41,11 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(bookList, HttpStatus.OK);
+    }
+
+    @GetMapping("/create")
+    public ModelAndView showFormCreate() {
+        return new ModelAndView("/book/create");
     }
 
     @PostMapping("")
