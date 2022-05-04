@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,13 @@ public class BookController {
     private IBookService bookService;
     @Autowired
     private ICategoryService categoryService;
+
+    @GetMapping("/list")
+    public ModelAndView getAllBooks() {
+        ModelAndView modelAndView = new ModelAndView("/book/list");
+        modelAndView.addObject("books", bookService.findAll());
+        return modelAndView;
+    }
 
     @GetMapping("")
     public ResponseEntity<Iterable<Book>> listAllBooks() {
@@ -47,7 +55,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Book> deleteBook(@PathVariable Long id, @RequestBody Book book) {
+    public ResponseEntity<Book> deleteBook(@PathVariable Long id) {
         Optional<Book> bookOptional = bookService.findById(id);
         if (bookOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
