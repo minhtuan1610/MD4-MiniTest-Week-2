@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,15 +38,10 @@ public class BookController {
     public ResponseEntity<Iterable<Book>> listAllBooks() {
         Iterable<Book> books = bookService.findAll();
         List<Book> bookList = (List<Book>) books;
-        if (bookList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+//        if (bookList.isEmpty()) {
+//            return new ResponseEntity<>(bookList, HttpStatus.NO_CONTENT);
+//        }
         return new ResponseEntity<>(bookList, HttpStatus.OK);
-    }
-
-    @GetMapping("/create")
-    public ModelAndView showFormCreate() {
-        return new ModelAndView("/book/create");
     }
 
     @PostMapping("")
